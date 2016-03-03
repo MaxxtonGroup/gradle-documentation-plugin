@@ -10,7 +10,7 @@ class MaxxtonDocumentationPlugin implements Plugin<Project>{
         
         project.task('extractSpringDoclet') <<{
             File tmpDir = new File("$project.buildDir/tmp")
-            File jarFile = new File(tmpDir, "springdoclet-0.0.1.jar")
+            File jarFile = new File(tmpDir, "springdoclet.jar")
             if(jarFile.exists()){
                 return;
             }
@@ -20,9 +20,9 @@ class MaxxtonDocumentationPlugin implements Plugin<Project>{
                 tmpDir.mkdirs()
                 jarFile.delete()
             
-                inputStream = MaxxtonDocumentationPlugin.class.getResourceAsStream("/springdoclet-0.0.1.jar")
+                inputStream = MaxxtonDocumentationPlugin.class.getResourceAsStream("/springdoclet.jar")
                 if(inputStream == null){
-                    throw new NullPointerException("Could not find '/springdoclet-0.0.1.jar' in resources")
+                    throw new NullPointerException("Could not find '/springdoclet.jar' in resources")
                 }
                 fileOut = new FileOutputStream(jarFile)
                 byte[] buffer = new byte[1024]
@@ -42,28 +42,28 @@ class MaxxtonDocumentationPlugin implements Plugin<Project>{
             }
         }
         
-        project.task('mxtDocSpring', type: Javadoc, dependsOn: ['mxtDocJxr', 'extractSpringDoclet'], group: 'mxtDoc') {
+        project.task('maxxtonDocSpring', type: Javadoc, dependsOn: ['maxxtonDocJxr', 'extractSpringDoclet'], group: 'maxxton') {
             title = ""
             source = project.sourceSets.main.allJava
             classpath = project.sourceSets.main.compileClasspath
             destinationDir = project.reporting.file("springdoc")
-            options.docletpath = [new File("$project.buildDir/tmp/springdoclet-0.0.1.jar")]
+            options.docletpath = [new File("$project.buildDir/tmp/springdoclet.jar")]
             options.doclet = 'org.springdoclet.SpringDoclet'
             options.addStringOption("linkpath", "../jxr/");
         }
         
-        project.task('mxtDocJavadoc', type: Javadoc, group: 'mxtDoc'){
+        project.task('maxxtonDocJavadoc', type: Javadoc, group: 'maxxton'){
             title = ""
             source = project.sourceSets.main.allJava
             destinationDir = project.reporting.file("javadoc")
             classpath = project.sourceSets.main.compileClasspath
         }
         
-        project.task('mxtDocJxr', type: Copy, dependsOn: ['jxr'], group: 'mxtDoc'){
+        project.task('maxxtonDocJxr', type: Copy, dependsOn: ['jxr'], group: 'maxxton'){
             from new File(project.buildDir, 'jxr')
             into project.reporting.file("jxr")
         }
         
-        project.task('mxtDoc', dependsOn: ['mxtDocSpring', 'mxtDocJavadoc', 'mxtDocJxr'], group: 'mxtDoc'){}
+        project.task('maxxtonDoc', dependsOn: ['maxxtonDocSpring', 'maxxtonDocJavadoc', 'maxxtonDocJxr'], group: 'maxxton'){}
     }
 }
