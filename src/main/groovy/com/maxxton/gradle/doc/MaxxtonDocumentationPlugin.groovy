@@ -3,6 +3,7 @@ package com.maxxton.gradle.doc
 
 import org.gradle.api.*
 import org.gradle.api.tasks.Copy
+import org.gradle.api.tasks.bundling.Zip
 import org.gradle.api.tasks.javadoc.Javadoc
 
 class MaxxtonDocumentationPlugin implements Plugin<Project>{
@@ -64,6 +65,9 @@ class MaxxtonDocumentationPlugin implements Plugin<Project>{
             into project.reporting.file("jxr")
         }
         
-        project.task('maxxtonDoc', dependsOn: ['maxxtonDocSpring', 'maxxtonDocJavadoc', 'maxxtonDocJxr'], group: 'maxxton'){}
+        project.task('maxxtonDoc', type:Zip, dependsOn: ['maxxtonDocSpring', 'maxxtonDocJavadoc', 'maxxtonDocJxr'], group: 'maxxton'){
+            from project.reporting.file("./")
+            baseName = "maxxton-doc"
+        }
     }
 }
