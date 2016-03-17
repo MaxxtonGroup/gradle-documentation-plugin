@@ -41,6 +41,10 @@ h3 img{
     color: #2196F3;
 }
 
+.light-green{
+    color: #8BC34A;
+}
+
 .table tbody th, .table tbody td{
     text-transform: capitalize;
 }

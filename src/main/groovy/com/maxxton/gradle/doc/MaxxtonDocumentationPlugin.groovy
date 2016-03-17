@@ -11,7 +11,7 @@ class MaxxtonDocumentationPlugin implements Plugin<Project>{
         
         project.task('extractSpringDoclet') <<{
             File tmpDir = new File("$project.buildDir/tmp")
-            File jarFile = new File(tmpDir, "springdoclet.jar")
+            File jarFile = new File(tmpDir, "spring-doclet-all-0.4.jar")
             if(jarFile.exists()){
                 return;
             }
@@ -21,9 +21,9 @@ class MaxxtonDocumentationPlugin implements Plugin<Project>{
                 tmpDir.mkdirs()
                 jarFile.delete()
             
-                inputStream = MaxxtonDocumentationPlugin.class.getResourceAsStream("/springdoclet.jar")
+                inputStream = MaxxtonDocumentationPlugin.class.getResourceAsStream("/spring-doclet-all-0.4.jar")
                 if(inputStream == null){
-                    throw new NullPointerException("Could not find '/springdoclet.jar' in resources")
+                    throw new NullPointerException("Could not find '/spring-doclet-all-0.4.jar' in resources")
                 }
                 fileOut = new FileOutputStream(jarFile)
                 byte[] buffer = new byte[1024]
@@ -48,7 +48,7 @@ class MaxxtonDocumentationPlugin implements Plugin<Project>{
             source = project.sourceSets.main.allJava
             classpath = project.sourceSets.main.compileClasspath
             destinationDir = project.reporting.file("springdoc")
-            options.docletpath = [new File("$project.buildDir/tmp/springdoclet.jar")]
+            options.docletpath = [new File("$project.buildDir/tmp/spring-doclet-all-0.4.jar")]
             options.doclet = 'org.springdoclet.SpringDoclet'
             options.addStringOption("linkpath", "../jxr/");
         }

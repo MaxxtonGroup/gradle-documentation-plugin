@@ -27,11 +27,11 @@ dependencies {
 }
 
 group='com.maxxton.gradle'
-version = '0.1'
+version = '0.4'
 
 uploadArchives {
     repositories {
-            mavenLocal()
+          mavenLocal()
 //        mavenDeployer {
 //        }
     }
